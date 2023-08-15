@@ -7,23 +7,22 @@
 #░░░  github.com/flufficat/qwerty  ░░░
 #░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-## NEED TO TEST IF PLAT IS ALREADY SET
-
-# Testing for platform
-if   [[ $XDG_SESSION_TYPE == "wayland" ]] ; then
-    plat="w"
-elif  [[ $QT_QPA_PLATFORM == "wayland" ]] ; then
-    plat="w"
-elif      [[ $GDK_BACKEND == "wayland" ]] ; then
-    plat="w"
-else
-    plat="x"
-fi
-
 # Manually set platform as wayland(w) or X11(x)
 #plat=w
 #plat=x
 
+# Testing for platform
+if [[ -z $plat ]] ; then
+    if   [[ $XDG_SESSION_TYPE == "wayland" ]] ; then
+        plat="w"
+    elif  [[ $QT_QPA_PLATFORM == "wayland" ]] ; then
+        plat="w"
+    elif      [[ $GDK_BACKEND == "wayland" ]] ; then
+        plat="w"
+    else
+        plat="x"
+    fi
+fi
 # Creating temporary file
 if [[ ! -f /tmp/andcopy.txt ]] ; then
 touch /tmp/andcopy.txt 
