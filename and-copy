@@ -4,13 +4,12 @@
 #░█▀▀░█░░░█░█░█▀▀░█▀▀░░█░░█░░░█▀█░░█░░
 #░▀░░░▀▀▀░▀▀▀░▀░░░▀░░░▀▀▀░▀▀▀░▀░▀░░▀░░
 #░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-#░░░  github.com/flufficat/qwerty  ░░░
+#░░░ github.com/flufficat/and-copy ░░░
 #░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 # Manually set platform as wayland(w) or X11(x)
 #plat=w
 #plat=x
-echo "re we working?"
 
 
 	# Testing for platform
@@ -25,30 +24,30 @@ echo "re we working?"
         	plat="x"
     	fi
 	fi
+
 	# Creating temporary file
 	if [[ ! -f /tmp/andcopy.txt ]] ; then
 	touch /tmp/andcopy.txt 
 	fi
-	
+
 	# Pasting clipboard into file
 	# For wayland
 	if   [[ $plat == "w" ]] ; then
     	# Testing for input into copy command
     	if [[ ! -z $1 ]] ; then
-		echo "term"
-        	echo "$1" >> /tmp/andcopy.txt
+        	cat "$1" >> /tmp/andcopy.txt
     	elif [[ ! -z $(wl-paste) ]] ; then
-		echo "clip"
         	echo "$(wl-paste)" >> /tmp/andcopy.txt
     	else
 		echo "No input. Please copy something or put it as an arguement e.g. and-copy <word>"
 		exit 1
     	fi
+
 	# For X11
 	elif [[ $plat == "x" ]] ; then 
-    	#    # Testing for input into copy command
+    	    # Testing for input into copy command
     	if [[ ! -z $1 ]] ; then
-        	echo "$1" >> /tmp/andcopy.txt
+        	cat "$1" >> /tmp/andcopy.txt
     	elif [[ ! -z $(xclip -o) ]] ; then
         	echo $(xclip -o) >> /tmp/andcopy.txt
     	else
@@ -77,7 +76,10 @@ doit () {
     	exit 1
 	fi
 }
-if [[ PRESSED = "$(notify-send -a qwerty -A PRESSED=Edit $(cat /tmp/andcopy.txt))" ]] ; then
+
+notify-send -a qwerty -A PRESSED=Edit "$(cat /tmp/andcopy.txt)"
+
+if [[ PRESSED = "PRESSED" ]] ; then
 	doit
 else
 	exit 0
