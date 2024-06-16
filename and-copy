@@ -10,6 +10,7 @@
 # Manually set platform as wayland(w) or X11(x)
 #plat=w
 #plat=x
+echo "re we working?"
 
 
 	# Testing for platform
@@ -34,8 +35,10 @@
 	if   [[ $plat == "w" ]] ; then
     	# Testing for input into copy command
     	if [[ ! -z $1 ]] ; then
+		echo "term"
         	echo "$1" >> /tmp/andcopy.txt
     	elif [[ ! -z $(wl-paste) ]] ; then
+		echo "clip"
         	echo "$(wl-paste)" >> /tmp/andcopy.txt
     	else
 		echo "No input. Please copy something or put it as an arguement e.g. and-copy <word>"
